@@ -1,12 +1,12 @@
 body {
-	font-family: sans-serif;
+	font-family: Verdana, sans-serif;
 }
 
 h1 {
-	font-size: 3rem;
+	font-size: 2rem;
 }
 
-a {
+#pager > ul > li, a{
 	color: dodgerblue;
 }
 
@@ -14,27 +14,53 @@ a {
 	display: flex;
 	justify-content: space-around;
 	list-style-type: none;
-	font-size: 1rem;
 }
 
 #user-list {
-	margin-top: 3rem;
+	margin-top: 1rem;
 }
 
 .subheader > ul {
 	background-color:dodgerblue;
 	color: white;
-	padding-top: 1rem;
+	font-weight: bold;
+}
+
+.subheader > ul > li {
+	padding: .5rem;
 }
 
 #user-list ul {
 	list-style-type: none;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	border-bottom: 1px solid black;
 	height: 2rem;
+	padding: .25rem;
 }
 
 #user-list ul li {
-	width: 250px; 
+	font-size: 0.8rem;
+	width: 350px; 
+	padding-left: .5rem;
+}
+
+@media (max-width: 800px) {
+	#pager > ul {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#user-list ul {
+		flex-direction: column;
+		height: auto;
+		line-height: 2rem;
+		padding: 0;
+	}
+
+	.subheader {
+		display: none;
+		padding: 0;
+	}
+
 }

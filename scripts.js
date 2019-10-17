@@ -34,7 +34,7 @@ const renderUsers = (userData) => {
         
     }).join('')
 
-    userList.innerHTML = `<div class='subheader'><ul><li>FirstName</li><li>Last Name</li><li>Email</li><li>Title</li></ul>${html}</div>`;
+    userList.innerHTML = `<div class='subheader'><ul><li>First Name</li><li>Last Name</li><li>Email</li><li>Title</li></ul></div>${html}`;
 }
 
 // const html = `<ul>
