@@ -1,0 +1,40 @@
+body {
+	font-family: sans-serif;
+}
+
+h1 {
+	font-size: 3rem;
+}
+
+a {
+	color: dodgerblue;
+}
+
+#pager > ul{
+	display: flex;
+	justify-content: space-around;
+	list-style-type: none;
+	font-size: 1rem;
+}
+
+#user-list {
+	margin-top: 3rem;
+}
+
+.subheader > ul {
+	background-color:dodgerblue;
+	color: white;
+	padding-top: 1rem;
+}
+
+#user-list ul {
+	list-style-type: none;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid black;
+	height: 2rem;
+}
+
+#user-list ul li {
+	width: 250px; 
+}

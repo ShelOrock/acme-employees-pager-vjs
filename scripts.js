@@ -1,8 +1,9 @@
 const fetchData = async() => {
-    const location = window.location.hash ? 1*window.location.hash.slice(1) : 0;
+    const idx = window.location.hash ? Number(window.location.hash.slice(1)) : 0;
 
-    const response = await fetch(`https://acme-users-api-rev.herokuapp.com/api/users`);
+    const response = await fetch(`https://acme-users-api-rev.herokuapp.com/api/users/${idx > 0 ? idx : ''}`);
     const data = await response.json();
+
     let {users, count} = data;
 
     // while (count > 0) {
@@ -13,55 +14,51 @@ const fetchData = async() => {
     // }
 
     renderUsers(users)
-    renderPager(count, location);
+    renderPager(count, idx);
 }
 
-const userList = document.querySelector('#userList')
+const userList = document.querySelector('#user-list')
 const pager = document.querySelector('#pager');
 
 
-
-
-
 const renderUsers = (userData) => {
-     
-    const HTML = userData.map(user => {
+    let html = userData.map(user => {
         return `<div class='user'>
         <ul>
             <li>${user.firstName}</li>
             <li>${user.lastName}</li>
-            <li>${user.email}</li>
+            <li class='user-email'>${user.email}</li>
             <li>${user.title}</li>
         </ul>
     </div>`
         
-    }).join()
+    }).join('')
 
-    userList.innerHTML = HTML;
+    userList.innerHTML = `<div class='subheader'><ul><li>FirstName</li><li>Last Name</li><li>Email</li><li>Title</li></ul>${html}</div>`;
 }
 
-const html = `<ul>
-<li><a href="${window.location.href}#">First</a></li>
-<li><a href="${window.location.href}#${location++}"></a>Next</li>
-<li>${location}</li>
-<li><a href="${window.location.href}#${location--}"></a>Previous</li>
-<li><a href="${window.location.href}#${Math.ceil(count / 50)}"></a></li>
-</ul>`
+// const html = `<ul>
+// <li><a href="${window.location.href}#">First</a></li>
+// <li><a href="${window.location.href}#${location++}"></a>Next</li>
+// <li>${location}</li>
+// <li><a href="${window.location.href}#${location--}"></a>Previous</li>
+// <li><a href="${window.location.href}#${Math.ceil(count / 50)}"></a></li>
+// </ul>`
 
-pager.innerHTML = html;
+// pager.innerHTML = html;
 
-const renderPager = (num, location) => {
+const renderPager = (num, idx) => {
     // add eventlistener for change in hash
 
-    // const html = `<ul>
-    // <li><a href="${window.location.href}#">First</a></li>
-    // <li><a href="${window.location.href}#${location++}"></a>Next</li>
-    // <li>${location}</li>
-    // <li><a href="${window.location.href}#${location--}"></a>Previous</li>
-    // <li><a href="${window.location.href}#${Math.ceil(count / 50)}"></a></li>
-    // </ul>`
+    const html = `<ul>
+    ${idx > 0 ? `<li><a href="${window.location.toString().split('#')[0]}">First</a></li>` : ''}
+    ${idx < Math.floor(num / 50) ? `<li><a href="${window.location.toString().split('#')[0]}#${idx + 1}">Next</a></li>` : ''}
+    <li>${idx + 1}</li>
+    ${idx > 0 ? `<li><a href="${window.location.toString().split('#')[0]}#${idx - 1}">Previous</a></li>` : ''}
+    ${idx < Math.floor(num / 50) ? `<li><a href="${window.location.toString().split('#')[0]}#${Math.floor(num / 50)}">Last</a></li>` : ''}
+    </ul>`
 
-    // pager.innerHTML = html;
+    pager.innerHTML = html;
 
     
     // const response = await fetch(`https://acme-users-api-rev.herokuapp.com/api/users/${location}`)
@@ -71,5 +68,8 @@ const renderPager = (num, location) => {
     // renderUsers(users);
 }
 
+window.addEventListener('hashchange', ev => {
+    fetchData();
+});
+
 fetchData()
-// renderPager()
