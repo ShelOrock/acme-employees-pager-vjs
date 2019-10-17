@@ -52,9 +52,9 @@ const renderPager = (num, idx) => {
 
     const html = `<ul>
     ${idx > 0 ? `<li><a href="${window.location.toString().split('#')[0]}">First</a></li>` : ''}
-    ${idx < Math.floor(num / 50) ? `<li><a href="${window.location.toString().split('#')[0]}#${idx + 1}">Next</a></li>` : ''}
-    <li>${idx + 1}</li>
     ${idx > 0 ? `<li><a href="${window.location.toString().split('#')[0]}#${idx - 1}">Previous</a></li>` : ''}
+    <li>${idx + 1}</li>
+    ${idx < Math.floor(num / 50) ? `<li><a href="${window.location.toString().split('#')[0]}#${idx + 1}">Next</a></li>` : ''}
     ${idx < Math.floor(num / 50) ? `<li><a href="${window.location.toString().split('#')[0]}#${Math.floor(num / 50)}">Last</a></li>` : ''}
     </ul>`
 
