@@ -1,10 +1,16 @@
-const fetchData = async() => {
+const fetchData = () => new Promise((res, rej) => { 
     const idx = window.location.hash ? Number(window.location.hash.slice(1)) : 0;
 
-    const response = await fetch(`https://acme-users-api-rev.herokuapp.com/api/users/${idx > 0 ? idx : ''}`);
-    const data = await response.json();
+        return fetch(`https://acme-users-api-rev.herokuapp.com/api/users/${idx > 0 ? idx : ''}`)
+        .then(response => response.json())
+        .then(data => {
+            let {users, count} = data;
+            renderUsers(users)
+            renderPager(count, idx);
+            })
+            .catch(e => rej(e));
+});
 
-    let {users, count} = data;
 
     // while (count > 0) {
     //     count -= 50;
@@ -12,10 +18,6 @@ const fetchData = async() => {
     //     response = await fetch((`https://acme-users-api-rev.herokuapp.com/api/users/${pgNum}`));
     //     pgNum++;
     // }
-
-    renderUsers(users)
-    renderPager(count, idx);
-}
 
 const userList = document.querySelector('#user-list')
 const pager = document.querySelector('#pager');
